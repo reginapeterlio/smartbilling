@@ -23,8 +23,8 @@ pytz==2023.3
 seaborn==0.12.2
 six==1.16.0
 SQLAlchemy==2.0.19
-Pillow==10.3.0
-qrcode==7.4.2
+Pillow
+qrcode
 typing_extensions==4.7.1
 tzdata==2023.3
 Werkzeug==2.3.6
