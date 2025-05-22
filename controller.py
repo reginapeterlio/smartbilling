@@ -253,7 +253,7 @@ import base64
 from io import BytesIO
 
 def generate_qr_base64(product_id):
-    url = f"http://localhost:8080/singleproduct/{product_id}"
+    url = f"https://smartbilling-hryf.onrender.com/singleproduct/{product_id}"
     qr = qrcode.make(url)
     buf = BytesIO()
     qr.save(buf, format='PNG')
