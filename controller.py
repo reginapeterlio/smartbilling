@@ -455,7 +455,19 @@ def order():
     else:
         #If user is not authenticated, redirect to the sign-in page
         return redirect("/sign-in")
-    
+
+@app.route('/update-payment-status', methods=['POST'])
+def update_payment_status():
+    order_id = request.form.get('order_id')
+    order = Order.query.get(order_id)
+    if order:
+        order.payment_status = 'success'
+        db.session.commit()
+        flash('Payment status updated successfully!', 'success')
+    else:
+        flash('Order not found', 'danger')
+    return redirect('/order')  
+   
 
 #ROUTE FOR HANDLING ORDERS
 @app.route("/order_details/<int:id>")

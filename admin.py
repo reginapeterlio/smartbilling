@@ -25,20 +25,7 @@ def admin_index():
         details_of_products=Product.query.all()
         # Sample data
         products = [detail.name for detail in details_of_products]
-        qty = [detail.qty for detail in details_of_products]
-        #Create a bar plot using Seaborn
-        sns.set(style="whitegrid")  # Set the style of the plot
-        plt.figure(figsize=(15, 15))  # Adjust the size of the plot
-        #Create the bar plot
-        ax = sns.barplot(x=products, y=qty, palette="viridis")
-        # Rotate x-axis labels for better readability
-        ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha="right")
-        #Adding labels and title
-        plt.xlabel("Products", fontweight="bold")
-        plt.ylabel("Quantity", fontweight="bold")
-        plt.title("Inventory in Stock", fontweight="bold")
-        #Save the plot as an image in static
-        plt.savefig("static/output.png")
+       
         #If admin is logged in
         return render_template("admin_index.html", flag=True)
     else:
@@ -383,6 +370,7 @@ def admin_product_update(id):
     if "admin_id" in session:
         #Get the updated product details from the form submitted by the admin
         name = request.form.get("product_name")
+        cata = request.form.get("product_category")
         brand = request.form.get("product_brand")
         mfg_date = request.form.get("product_mfg_date")
         exp_date = request.form.get("product_exp_date")
@@ -407,6 +395,7 @@ def admin_product_update(id):
         if admin_check:
             #If the admin is verified and an image was uploaded, update the product name
             check[0].name = name
+            check[0].category = cata
             check[0].brand = brand
             check[0].mfg_date = mfg_date
             check[0].exp_date = exp_date

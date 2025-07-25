@@ -58,6 +58,7 @@ class Order(db.Model):
     user_id = db.Column(db.Integer)
     order_total = db.Column(db.Integer)
     order_time = db.Column(db.DateTime, nullable=False, default = datetime.utcnow)
+    payment_status = db.Column(db.String(20), nullable=False, default="pending") 
 
 class Order_details(db.Model):
     __tablename__="order_details"

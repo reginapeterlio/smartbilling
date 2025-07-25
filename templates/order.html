@@ -5,16 +5,51 @@
         <div class="row row-cols-1 row-cols-md-4 g-4 my-2 mx-2">
             {% for order in all_orders %}
                     <div class="col" id="mv">
-                    <a href="/order_details/{{order.id}}">
+                    
                     <div class="card">
                         <div class="card-body">
+                            <a href="/order_details/{{order.id}}">
                         <p class="card-title">id: {{order.id}}</p>
                         <p class="card-title" style="float:right;">total: {{order.order_total}}</p>
                         <p class="card-title">time: {{order.order_time}}</p>
+                        <p class="card-title">Status: {{ order.payment_status }}</p>
+</a>
+    {% if order.payment_status == 'pending' %}
+        <button class="btn btn-primary" onclick="showQRModal({{ order.id }})">Pay Now</button>
+    {% endif %}
                         </div>
                     </div>
-                    </a>
+                    
                     </div>
             {% endfor %}
         </div>
+            <div id="qrModal" class="modal" tabindex="-1" style="display:none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Scan QR to Pay</h5>
+        <button type="button" class="btn-close" onclick="closeQRModal()"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img src="{{ url_for('static', filename='qr-code.jpg') }}" alt="QR Code" style="width:200px;">
+      </div>
+      <div class="modal-footer">
+        <form method="POST" action="{{ url_for('update_payment_status') }}">
+            <input type="hidden" name="order_id" id="orderIdInput">
+            <button type="submit" class="btn btn-success">Payment Success</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    function showQRModal(orderId) {
+        document.getElementById("orderIdInput").value = orderId;
+        document.getElementById("qrModal").style.display = "block";
+    }
+    function closeQRModal() {
+        document.getElementById("qrModal").style.display = "none";
+    }
+</script>
     {% endblock %}
